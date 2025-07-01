@@ -79,12 +79,8 @@ WSGI_APPLICATION = 'MiProyectoTaller.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'proyecto2',
-        'USER': 'root',
-        'PASSWORD': 'root12345.',
-        'HOST': 'trabajotaller.cbqgkgiuafaz.us-east-1.rds.amazonaws.com',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
