@@ -40,7 +40,7 @@ class TrabajadorRepository:
         y devuelve los resultados como una lista de diccionarios.
         """
         with connection.cursor() as cursor:
-            cursor.callproc("ContarTrabajadoresPorGenero")
+            cursor.callproc("sp_listar_trabajadores_por_genero")
             resultados = cursor.fetchall()
             columnas = [col[0] for col in cursor.description]
             return [dict(zip(columnas, fila)) for fila in resultados]

@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from AppProyecto.services.trabajador_service import TrabajadorService
 from django.core.paginator import Paginator
 from django.db import IntegrityError
-import re
 
 def validar_telefono(telefono):
     """Valida el formato básico del teléfono."""

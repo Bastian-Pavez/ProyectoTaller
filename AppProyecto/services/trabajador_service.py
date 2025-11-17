@@ -1,5 +1,6 @@
 from AppProyecto.repositories.trabajador_repository import TrabajadorRepository
 from AppProyecto.services.usuario_service import UsuarioService
+from AppProyecto.models import Rol
 
 class TrabajadorService:
 
@@ -41,11 +42,34 @@ class TrabajadorService:
             contraseña = f"12345"
             email = f"{nombre_usuario}@logisticaqk.cl"
             
+            # Obtener el rol por defecto de forma segura
+            rol_por_defecto = None
+            try:
+                # Intentar obtener el rol con id=3
+                rol_por_defecto = Rol.objects.get(pk=3)
+            except Rol.DoesNotExist:
+                # Si no existe, buscar por nombre común
+                nombres_roles_comunes = ['Trabajador', 'Empleado', 'Usuario', 'Operario']
+                for nombre_rol in nombres_roles_comunes:
+                    try:
+                        rol_por_defecto = Rol.objects.get(nombre=nombre_rol)
+                        break
+                    except Rol.DoesNotExist:
+                        continue
+                
+                # Si aún no se encontró, usar el primer rol disponible
+                if not rol_por_defecto:
+                    rol_por_defecto = Rol.objects.first()
+                
+                # Si no hay roles en la base de datos, lanzar error
+                if not rol_por_defecto:
+                    raise ValueError("No hay roles disponibles en la base de datos. Por favor, cree al menos un rol antes de crear trabajadores.")
+            
             # En lugar de crear un diccionario, pasamos los argumentos directamente
             usuario = UsuarioService.crear_usuario(
                 nombre_usuario=nombre_usuario,
                 trabajador_id=trabajador.rut,  # Usando rut como ID
-                rol_id=3,  # ID del rol por defecto
+                rol_id=rol_por_defecto.id_rol,  # ID del rol encontrado
                 contrasena=contraseña,
                 email=email
             )
