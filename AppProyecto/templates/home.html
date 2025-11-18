@@ -1,36 +1,122 @@
-<!-- AppProyecto/templates/home.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - Dashboard</title>
-    {% load static %} 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>Dashboard - Sistema de Gestión</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
+
 <body>
-    <div class="container">
-        <h1>Bienvenido, {{ usuario.nombre_usuario }}</h1>
-        
-        <div class="actions">
-            {% if usuario.rol.nombre == 'ADMIN' %}
-                <a href="{% url 'listar_trabajadores' %}"><button>Gestionar Trabajadores</button></a>
-                <a href="{% url 'lista_usuarios' %}"><button>Gestionar Usuarios</button></a>
-                <a href="{% url 'listar_contactos' %}"><button>Gestionar Contactos de Emergencia</button></a>
-                <a href="{% url 'listar_cargas_familiares' %}"><button>Gestionar Carga Familiar</button></a>
-                <a href="{% url 'lista_datos_laborales' %}"><button>Gestionar Datos Laborales</button></a>
-                <a href="{% url 'procedimiento' %}"><button>Procediminetos Almacenados</button></a>
-            
-            {% elif usuario.rol.nombre == 'RRHH' %}
-                <a href="{% url 'listar_trabajadores' %}"><Button>Gestionar Trabajadores</Button></a>
-            {% elif usuario.rol.nombre == 'EMPLEADO' %}
-                <a href=><button>Ver Mi Perfil</button></a>
-            {% endif %}
+    <header class="header">
+        <div class="header-content">
+            <div class="user-info">
+                <div class="user-avatar">
+                    {{ usuario.nombre_usuario.0|upper }}
+                </div>
+                <div class="user-details">
+                    <h2>{{ usuario.nombre_usuario }}</h2>
+                    <span class="role-badge
+                        {% if usuario.rol.nombre == 'ADMIN' %}role-admin
+                        {% elif usuario.rol.nombre == 'RRHH' %}role-rrhh
+                        {% else %}role-empleado{% endif %}">
+                        {{ usuario.rol.nombre }}
+                    </span>
+                </div>
+            </div>
+            <a href="{% url 'logout' %}" class="logout-btn">Cerrar Sesión</a>
         </div>
-        
-        <div class="footer">
-            <a href="{% url 'logout' %}" class="btn"><button>Cerrar Sesión</button></a>
+    </header>
+
+
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Bienvenido de nuevo</h1>
+            <p>Selecciona una opción para comenzar a gestionar el sistema</p>
+        </div>
+
+
+        <div class="cards-grid">
+            {% if usuario.rol.nombre == 'ADMIN' %}
+            <a href="{% url 'listar_trabajadores' %}" class="card">
+                <div class="card-icon card-icon-purple"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path
+                            d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
+                    </svg> </div>
+                <h3>Gestionar Trabajadores</h3>
+                <p>Administra la información de todos los trabajadores del sistema</p>
+            </a>
+
+
+            <a href="{% url 'lista_usuarios' %}" class="card">
+                <div class="card-icon card-icon-blue"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                    </svg> </div>
+                <h3>Gestionar Usuarios</h3>
+                <p>Controla los usuarios y permisos del sistema</p>
+            </a>
+
+
+            <a href="{% url 'listar_contactos' %}" class="card">
+                <div class="card-icon card-icon-green"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path
+                            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                    </svg> </div>
+                <h3>Contactos de Emergencia</h3>
+                <p>Administra los contactos de emergencia de los trabajadores</p>
+            </a>
+
+
+            <a href="{% url 'listar_cargas_familiares' %}" class="card">
+                <div class="card-icon card-icon-orange"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path
+                            d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63C19.68 7.55 18.92 7 18.06 7h-.12c-.86 0-1.62.55-1.9 1.37L13.5 16H16v6h4zM5.5 6c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zm1.5 15v-5H9V9H2v7h2v5h3zm6-9c.83 0 1.5-.67 1.5-1.5S13.83 9 13 9s-1.5.67-1.5 1.5.67 1.5 1.5 1.5z" />
+                    </svg> </div>
+                <h3>Carga Familiar</h3>
+                <p>Gestiona la información de las cargas familiares</p>
+            </a>
+
+
+            <a href="{% url 'lista_datos_laborales' %}" class="card">
+                <div class="card-icon card-icon-red"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path
+                            d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.1-.89-2-2-2zm-6 0h-4V4h4v2z" />
+                    </svg> </div>
+                <h3>Datos Laborales</h3>
+                <p>Administra la información laboral de los trabajadores</p>
+            </a>
+
+
+            <a href="{% url 'procedimiento' %}" class="card">
+                <div class="card-icon card-icon-teal"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path
+                            d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
+                    </svg> </div>
+                <h3>Procedimientos</h3>
+                <p>Ejecuta procedimientos almacenados del sistema</p>
+            </a>
+
+
+            {% elif usuario.rol.nombre == 'RRHH' %}
+            <a href="{% url 'listar_trabajadores' %}" class="card">
+                <div class="card-icon card-icon-purple"> ... </div>
+                <h3>Gestionar Trabajadores</h3>
+                <p>Administra la información de todos los trabajadores</p>
+            </a>
+
+
+            {% elif usuario.rol.nombre == 'EMPLEADO' %}
+            <a href="#" class="card">
+                <div class="card-icon card-icon-blue"> ... </div>
+                <h3>Mi Perfil</h3>
+                <p>Visualiza y actualiza tu información personal</p>
+            </a>
+            {% endif %}
         </div>
     </div>
 </body>
+
 </html>
