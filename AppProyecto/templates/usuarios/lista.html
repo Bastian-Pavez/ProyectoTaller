@@ -3,41 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Usuarios</title>
-    {% load static %} 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>Gestión de Usuarios</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/gestion_usuarios.css' %}">
+    <script src="{% static 'js/usuarios.js' %}" defer></script>
 </head>
+
 <body>
-    <div class="container">
-        <h2>Lista de Usuarios</h2>
-        <a href="{% url 'crear_usuario' %}"><button>Crear Nuevo Usuario</button></a>
+
+<header class="header">
+    <div class="header-content">
+        <a href="{% url 'home' %}" class="back-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Volver al Dashboard
+        </a>
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Gestión de Usuarios</h1>
+        <p>Administra los usuarios del sistema y sus permisos</p>
+    </div>
+
+    <div class="toolbar">
+        <div class="search-box">
+            <input id="searchInput" type="text" placeholder="Buscar usuarios por nombre o email...">
+        </div>
+
+        <a href="{% url 'crear_usuario' %}">
+            <button class="add-btn">+ Nuevo Usuario</button>
+        </a>
+    </div>
+
+    <div class="table-container">
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nombre de Usuario</th>
+                    <th>Usuario</th>
+                    <th>Email</th>
                     <th>Rol</th>
-                    <th>Correo</th>
+                    <th>Trabajador</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
-            
-            <tbody>
+
+            <tbody id="tablaUsuarios">
                 {% for usuario in usuarios %}
+
+                <tr>
+                    <td><strong>{{ usuario.nombre_usuario }}</strong></td>
+
+                    <td>{{ usuario.email }}</td>
+
+                    <td>
+                        {% if usuario.rol %}
+                            <span class="role-badge role-{{ usuario.rol.nombre|lower }}">
+                                {{ usuario.rol.nombre }}
+                            </span>
+                        {% else %}
+                            <span class="role-badge role-other">SIN ROL</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if usuario.trabajador %}
+                            {{ usuario.trabajador.nombre }} {{ usuario.trabajador.apellido }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <div class="actions">
+                            <a href="{% url 'actualizar_usuario' usuario.id_usuario %}" class="action-btn edit">
+                                Editar
+                            </a>
+
+                            <form action="{% url 'eliminar_usuario' usuario.id_usuario %}" 
+                                  method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button class="action-btn delete"
+                                        onclick="return confirm('¿Eliminar este usuario?');">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+
+                {% empty %}
                     <tr>
-                        <td>{{ usuario.id_usuario }}</td>
-                        <td>{{ usuario.nombre_usuario }}</td>
-                        <td>{{ usuario.rol.nombre }}</td>
-                        <td>{{ usuario.email }}</td>
-                        <td>
-                            <a href="{% url 'actualizar_usuario' usuario.id_usuario %}"><button class="miniButton">Editar</button></a>
-                            <a href="{% url 'eliminar_usuario' usuario.id_usuario %}"><button class="miniButton">Eliminar</button></a>
+                        <td colspan="5" style="text-align:center; padding:20px;">
+                            No hay usuarios registrados.
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <a href="{% url 'home' %}"><button>Regresar al Home</button></a>
     </div>
+
+</div>
 </body>
 </html>
