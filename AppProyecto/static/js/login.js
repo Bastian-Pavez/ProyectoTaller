@@ -30,3 +30,12 @@ document.addEventListener("DOMContentLoaded", function() {
         }, 5000);
     }
 });
+
+
+document.getElementById('loginForm').addEventListener('submit', function (e) {
+    const overlay = document.getElementById('loadingOverlay');
+    const submitBtn = this.querySelector('button[type="submit"]');
+
+    overlay.classList.add('active');
+    submitBtn.disabled = true;
+});

@@ -4,58 +4,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-    <title>Logistica QK - Gestión Integral</title>
+    <title>Logística QK - Gestión Integral</title>
+    <link rel="stylesheet" href="{% static 'css/inicio.css' %}">
 </head>
-<body class="body-inicio">
-    <header>
-        <div class="navbar">
+
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <div class="logo">Logística QK</div>
+        <nav class="navbar">
             <a href="#inicio">Inicio</a>
             <a href="#mision">Misión</a>
             <a href="#contacto">Contacto</a>
-        </div>
-    </header>
+        </nav>
+        <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
+    </div>
+</header>
 
-    <section id="inicio" class="banner">
-        <h1>Bienvenidos a Logistica QK</h1>
+
+<!-- HERO / BANNER PRINCIPAL -->
+<section id="inicio" class="hero">
+    <div class="hero-content">
+        <h1>Bienvenidos a Logística QK</h1>
         <p>Soluciones integrales en gestión logística y transporte</p>
-        <a href="{% url 'login' %}" class="btn login-btn">Iniciar Sesión</a>
-    </section>
+        <a href="{% url 'login' %}" class="btn-primary">Ingresar al Sistema</a>
+    </div>
+</section>
 
-    <section id="mision">
-        <h2>Nuestra Misión</h2>
-        <div class="mision-container">
-            <div class="mision-item">
-                <img src="https://ciatransportadora.com/wp-content/uploads/2024/06/Eficiencia-Logistica.jpg" alt="Eficiencia">
-                <h3>Eficiencia</h3>
-                <p>Optimizamos procesos logísticos para maximizar tu productividad</p>
-            </div>
-            <div class="mision-item">
-                <img src="https://alianzaflotillera.com/wp-content/uploads/2020/06/Transporte-y-Logistica.jpg" alt="Seguridad">
-                <h3>Seguridad</h3>
-                <p>Garantizamos la integridad de tu carga en cada trayecto</p>
-            </div>
-            <div class="mision-item">
-                <img src="https://www.beetrack.com/hubfs/Log%C3%ADstica%20y%20cadena%20de%20suministro.jpg" alt="Innovación">
-                <h3>Innovación</h3>
-                <p>Implementamos tecnología de punta en gestión logística</p>
-            </div>
+
+<!-- MISIÓN -->
+<section id="mision" class="section">
+    <h2 class="section-title">Nuestra Misión</h2>
+
+    <div class="cards-container">
+
+        <div class="card">
+            <img src="https://ciatransportadora.com/wp-content/uploads/2024/06/Eficiencia-Logistica.jpg" alt="Eficiencia">
+            <h3>Eficiencia</h3>
+            <p>Optimizamos procesos logísticos para maximizar tu productividad.</p>
         </div>
-    </section>
 
-    <section id="contacto">
-        <h2>Contacto</h2>
-        <form>
-            <input type="text" placeholder="Nombre" required>
-            <input type="email" placeholder="Correo electrónico" required>
-            <input type="tel" placeholder="Teléfono" required>
-            <textarea placeholder="Mensaje sobre servicios logísticos"></textarea>
-            <button type="submit">Enviar Consulta</button>
-        </form>
-    </section>
+        <div class="card">
+            <img src="https://alianzaflotillera.com/wp-content/uploads/2020/06/Transporte-y-Logistica.jpg" alt="Seguridad">
+            <h3>Seguridad</h3>
+            <p>Garantizamos la integridad de tu carga en cada trayecto.</p>
+        </div>
 
-    <footer>
-        <p>© 2024 Logistica QK. Todos los derechos reservados. Gestión Logística Inteligente</p>
-    </footer>
+        <div class="card">
+            <img src="https://www.beetrack.com/hubfs/Log%C3%ADstica%20y%20cadena%20de%20suministro.jpg" alt="Innovación">
+            <h3>Innovación</h3>
+            <p>Implementamos tecnología de punta en gestión logística.</p>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- CONTACTO -->
+<section id="contacto" class="section contact-section">
+    <h2 class="section-title">Contacto</h2>
+
+    <form class="contact-form">
+        <input type="text" placeholder="Nombre" required>
+        <input type="email" placeholder="Correo electrónico" required>
+        <input type="tel" placeholder="Teléfono" required>
+        <textarea placeholder="Mensaje sobre servicios logísticos"></textarea>
+        <button type="submit" class="btn-primary">Enviar Consulta</button>
+    </form>
+</section>
+
+
+<footer class="footer">
+    <p>© 2024 Logística QK. Todos los derechos reservados. Gestión Logística Inteligente.</p>
+</footer>
+
 </body>
 </html>
