@@ -24,6 +24,7 @@ def login_view(request):
         if check_password(contrasena, usuario.contrasena):
             # Almacenar información del usuario en la sesión
             request.session['user_id'] = usuario.id_usuario
+            request.session.save()  # Asegurar que la sesión se guarde
             
             # Redirigir al home después de validar el login
             return redirect('home')  # Asegúrate de que 'home' esté definido en tus URLs
