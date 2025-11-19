@@ -1,49 +1,79 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Cargas Familiares</title>
-    {% load static %} 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargas Familiares - Sistema de Gestión</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cargas_familiares.css' %}">
 </head>
 <body>
+    <header class="header">
+        <div class="header-content">
+            <a href="{% url 'home' %}" class="back-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Volver al Dashboard
+            </a>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>Lista de Cargas Familiares</h1>
-        <a href="{% url 'crear_carga_familiar' %}"><button>Agregar Nueva Carga Familiar</button></a>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Parentesco</th>
-                    <th>Género</th>
-                    <th>RUT</th>
-                    <th>Trabajador</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for carga in cargas_familiares %}
+        <div class="page-header">
+            <h1>Cargas Familiares</h1>
+            <p>Gestiona la información de las cargas familiares de los trabajadores</p>
+        </div>
+
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" placeholder="Buscar cargas familiares por nombre o RUT...">
+            </div>
+            <a href="{% url 'crear_carga_familiar' %}">
+                <button class="add-btn">+ Nueva Carga Familiar</button>
+            </a>
+        </div>
+
+        <div class="table-container">
+            <table class="cargas-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Parentesco</th>
+                        <th>Género</th>
+                        <th>RUT</th>
+                        <th>Trabajador</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for carga in cargas_familiares %}
                     <tr>
                         <td>{{ carga.id_carga_familiar }}</td>
-                        <td>{{ carga.nombre }}</td>
+                        <td><strong>{{ carga.nombre }}</strong></td>
                         <td>{{ carga.parentesco }}</td>
                         <td>{{ carga.genero }}</td>
                         <td>{{ carga.rut }}</td>
                         <td>{{ carga.trabajador.nombre }}</td>
                         <td>
-                            <a href="{% url 'editar_carga_familiar' carga.id_carga_familiar %}"><button class="miniButton">Editar</button></a>
-                            <a href="{% url 'eliminar_carga_familiar' carga.id_carga_familiar %}"><button class="miniButton">Eliminar</button></a>
+                            <div class="actions">
+                                <a href="{% url 'editar_carga_familiar' carga.id_carga_familiar %}" class="action-btn edit">Editar</a>
+                                <a href="{% url 'eliminar_carga_familiar' carga.id_carga_familiar %}" class="action-btn delete">Eliminar</a>
+                            </div>
                         </td>
                     </tr>
-                {% empty %}
+                    {% empty %}
                     <tr>
-                        <td colspan="7">No hay cargas familiares registradas.</td>
+                        <td colspan="7" style="text-align: center; padding: 40px; color: #a0aec0;">
+                            No hay cargas familiares registradas.
+                        </td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="{% url 'home' %}"><button>Regresar al Home</button></a>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

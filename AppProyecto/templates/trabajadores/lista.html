@@ -1,67 +1,100 @@
-<!-- templates/trabajadores/lista.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Trabajadores</title>
-    {% load static %} 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Trabajadores - Sistema de Gestión</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/trabajadores.css' %}">
 </head>
 <body>
+    <header class="header">
+        <div class="header-content">
+            <a href="{% url 'home' %}" class="back-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Volver al Dashboard
+            </a>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>Lista de Trabajadores</h1>
-        <a href="{% url 'crear_trabajador' %}"><button>Crear nuevo trabajador</button></a>
-        
-        <table>
-            <thead>
-                <tr>
-                    <th>RUT</th>
-                    <th>Nombre</th>
-                    <th>Género</th>
-                    <th>Dirección</th>
-                    <th>Teléfono</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for trabajador in trabajadores %}
-                <tr>
-                    <td>{{ trabajador.rut }}</td>
-                    <td>{{ trabajador.nombre }}</td>
-                    <td>
-                        {% if trabajador.genero %}
-                            {{ trabajador.genero.nombre }}
-                        {% else %}
-                            Sin género
-                        {% endif %}
-                    </td>
-                    <td>{{ trabajador.direccion }}</td>
-                    <td>{{ trabajador.telefono }}</td>
-                    <td>
-                        <a href="{% url 'actualizar_trabajador' trabajador.rut %}"><button class="miniButton">Editar</button></a>
-                        <a href="{% url 'eliminar_trabajador' trabajador.rut %}"><button class="miniButton">Eliminar</button></a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        
+        <div class="page-header">
+            <h1>Gestión de Trabajadores</h1>
+            <p>Administra la información de todos los trabajadores del sistema</p>
+        </div>
+
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" placeholder="Buscar trabajadores por nombre o RUT...">
+            </div>
+            <a href="{% url 'crear_trabajador' %}">
+                <button class="add-btn">+ Nuevo Trabajador</button>
+            </a>
+        </div>
+
+        <div class="table-container">
+            <table class="trabajadores-table">
+                <thead>
+                    <tr>
+                        <th>RUT</th>
+                        <th>Nombre</th>
+                        <th>Género</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trabajador in trabajadores %}
+                    <tr>
+                        <td><strong>{{ trabajador.rut }}</strong></td>
+                        <td>{{ trabajador.nombre }}</td>
+                        <td>
+                            {% if trabajador.genero %}
+                                {{ trabajador.genero.nombre }}
+                            {% else %}
+                                <span style="color: #a0aec0;">Sin género</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ trabajador.direccion }}</td>
+                        <td>{{ trabajador.telefono }}</td>
+                        <td>
+                            <div class="actions">
+                                <a href="{% url 'actualizar_trabajador' trabajador.rut %}" class="action-btn edit">Editar</a>
+                                <a href="{% url 'eliminar_trabajador' trabajador.rut %}" class="action-btn delete">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: #a0aec0;">
+                            No hay trabajadores registrados.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
         <!-- Controles de paginación -->
+        {% if trabajadores.has_other_pages %}
         <div class="pagination">
             {% if trabajadores.has_previous %}
-                <a href="?page=1"><button>Primera Página</button></a>
-                <a href="?page={{ trabajadores.previous_page_number }}"><button>Anterior Página</button></a>
+                <a href="?page=1">Primera</a>
+                <a href="?page={{ trabajadores.previous_page_number }}">Anterior</a>
             {% endif %}
 
             <span>Página {{ trabajadores.number }} de {{ trabajadores.paginator.num_pages }}</span>
 
             {% if trabajadores.has_next %}
-                <a href="?page={{ trabajadores.next_page_number }}"><button>Siguiente Página</button></a>
-                <a href="?page={{ trabajadores.paginator.num_pages }}"><button>Última Página</button></a>
+                <a href="?page={{ trabajadores.next_page_number }}">Siguiente</a>
+                <a href="?page={{ trabajadores.paginator.num_pages }}">Última</a>
             {% endif %}
         </div>
-
-        <a href="{% url 'home' %}"><button>Regresar al Home</button></a>
+        {% endif %}
     </div>
 </body>
 </html>

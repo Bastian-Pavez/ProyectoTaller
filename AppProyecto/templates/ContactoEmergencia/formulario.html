@@ -1,39 +1,72 @@
-<!-- contacto_emergencia_form.html -->
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if contacto %}Editar{% else %}Crear{% endif %} Contacto de Emergencia</title>
-    {% load static %} 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>{% if contacto %}Editar{% else %}Crear{% endif %} Contacto de Emergencia - Sistema de Gestión</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/formularios.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contactos.css' %}">
 </head>
 <body>
+    <header class="header">
+        <div class="header-content">
+            <a href="{% url 'listar_contactos' %}" class="back-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Volver a la lista
+            </a>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>{% if contacto %}Editar{% else %}Crear{% endif %} Contacto de Emergencia</h1>
-        <form method="POST" action="{% url 'crear_contacto' %}">
-            {% csrf_token %}
-            
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" required>
-        
-            <label for="relacion">Relación:</label>
-            <input type="text" name="relacion">
-        
-            <label for="telefono">Teléfono:</label>
-            <input type="text" name="telefono" required>
-        
-            <label for="trabajador">Trabajador:</label>
-            <select name="trabajador" required>
-                {% for trabajador in trabajadores %}
-                    <option value="{{ trabajador.rut }}">{{ trabajador.nombre }}</option>
-                {% endfor %}
-            </select>
-        
-            <button type="submit">Crear Contacto de Emergencia</button>
-        </form>
-        <a href="{% url 'listar_contactos' %}"><button>Volver a la lista de contactos</button></a>
+        <div class="page-header">
+            <h1>{% if contacto %}Editar{% else %}Crear{% endif %} Contacto de Emergencia</h1>
+            <p>{% if contacto %}Modifica la información del contacto{% else %}Completa los datos para crear un nuevo contacto{% endif %}</p>
+        </div>
+
+        <div class="form-container">
+            <form method="POST" action="{% if contacto %}{% url 'editar_contacto' contacto.id_contacto %}{% else %}{% url 'crear_contacto' %}{% endif %}">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" name="nombre" id="nombre" value="{% if contacto %}{{ contacto.nombre }}{% endif %}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="relacion">Relación:</label>
+                    <input type="text" name="relacion" id="relacion" value="{% if contacto %}{{ contacto.relacion }}{% endif %}">
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" name="telefono" id="telefono" value="{% if contacto %}{{ contacto.telefono }}{% endif %}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="trabajador">Trabajador:</label>
+                    <select name="trabajador" id="trabajador" required>
+                        <option value="">Selecciona un trabajador</option>
+                        {% for trabajador in trabajadores %}
+                            <option value="{{ trabajador.rut }}" 
+                                    {% if contacto and contacto.trabajador.rut == trabajador.rut %}selected{% endif %}>
+                                {{ trabajador.nombre }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit">{% if contacto %}Actualizar{% else %}Crear{% endif %}</button>
+                    <a href="{% url 'listar_contactos' %}">
+                        <button type="button" class="cancel-btn">Cancelar</button>
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

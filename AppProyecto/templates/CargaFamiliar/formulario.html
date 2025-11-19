@@ -1,93 +1,111 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>{% if carga_familiar %}Editar{% else %}Crear{% endif %} Carga Familiar</title>
-    {% load static %} 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if carga_familiar %}Editar{% else %}Crear{% endif %} Carga Familiar - Sistema de Gestión</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/formularios.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cargas_familiares.css' %}">
     <script src="{% static 'js/rut_format.js' %}"></script>
-    <style>
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-    </style>
 </head>
 <body>
+    <header class="header">
+        <div class="header-content">
+            <a href="{% url 'listar_cargas_familiares' %}" class="back-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Volver a la lista
+            </a>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>{% if carga_familiar %}Editar{% else %}Crear{% endif %} Carga Familiar</h1>
-       
-        {% if messages %}
-            {% for message in messages %}
-                <div class="error-message">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
+        <div class="page-header">
+            <h1>{% if carga_familiar %}Editar{% else %}Crear{% endif %} Carga Familiar</h1>
+            <p>{% if carga_familiar %}Modifica la información de la carga familiar{% else %}Completa los datos para crear una nueva carga familiar{% endif %}</p>
+        </div>
 
-        <form method="post" action="">
-           {% csrf_token %}
-           
-           <div class="form-group">
-               <label for="nombre">Nombre:</label>
-               <input type="text" id="nombre" name="nombre" value="{{ values.nombre|default:'' }}">
-           </div>
+        <div class="form-container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="error-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
 
-           
-            <label for="parentesco">Parentesco:</label>
-            <select name="parentesco" id="parentesco">
-            <option value="">Selecciona un parentesco</option>
-            {% for parentesco in parentescos %}
-                <option value="{{ parentesco.id_parentesco }}" 
-                        {% if values.parentesco == parentesco.id_parentesco|stringformat:"s" %}selected{% endif %}>
-                    {{ parentesco.nombre }}
-                </option>
-            {% endfor %}
-            </select>
-            
+            <form method="post" action="">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="{% if carga_familiar %}{{ carga_familiar.nombre }}{% elif values.nombre %}{{ values.nombre }}{% endif %}" required>
+                </div>
 
-          
-            <label for="genero">Género:</label>
-            <select name="genero" id="genero">
-            <option value="">Selecciona un género</option>
-            {% for genero in generos %}
-                <option value="{{ genero.id_genero }}" 
-                        {% if values.genero == genero.id_genero|stringformat:"s" %}selected{% endif %}>
-                    {{ genero.nombre }}
-                </option>
-            {% endfor %}
-            </select>
-            
+                <div class="form-group">
+                    <label for="parentesco">Parentesco:</label>
+                    <select name="parentesco" id="parentesco" required>
+                        <option value="">Selecciona un parentesco</option>
+                        {% for parentesco in parentescos %}
+                            <option value="{{ parentesco.id_parentesco }}" 
+                                    {% if carga_familiar and carga_familiar.parentesco.id_parentesco == parentesco.id_parentesco %}selected
+                                    {% elif values.parentesco == parentesco.id_parentesco|stringformat:"s" %}selected{% endif %}>
+                                {{ parentesco.nombre }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-            
-            <label for="rut">RUT:</label>
-            <input type="text" name="rut" id="rut" 
-                    oninput="formatearRut(this)" 
-                    maxlength="12" 
-                    value="{{ values.rut|default:'' }}"
-                    placeholder="12.345.678-9">
-            <label id="Invalido" style="display: none; color: red;"><b>Inválido</b></label>
-            <label id="Valido" style="display: none; color: green;"><b>RUT Válido</b></label>
-           
+                <div class="form-group">
+                    <label for="genero">Género:</label>
+                    <select name="genero" id="genero" required>
+                        <option value="">Selecciona un género</option>
+                        {% for genero in generos %}
+                            <option value="{{ genero.id_genero }}" 
+                                    {% if carga_familiar and carga_familiar.genero.id_genero == genero.id_genero %}selected
+                                    {% elif values.genero == genero.id_genero|stringformat:"s" %}selected{% endif %}>
+                                {{ genero.nombre }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-           
-            <label for="trabajador">Trabajador:</label>
-            <select name="trabajador" id="trabajador">
-            <option value="">Selecciona un trabajador</option>
-            {% for trabajador in trabajadores %}
-                <option value="{{ trabajador.rut }}"
-                        {% if values.trabajador == trabajador.rut %}selected{% endif %}>
-                    {{ trabajador.nombre }}
-                </option>
-            {% endfor %}
-            </select>
-           
+                <div class="form-group">
+                    <label for="rut">RUT:</label>
+                    <input type="text" name="rut" id="rut" 
+                            oninput="formatearRut(this)" 
+                            onblur="validarRut(this,'rut')"
+                            maxlength="12" 
+                            value="{% if carga_familiar %}{{ carga_familiar.rut }}{% elif values.rut %}{{ values.rut }}{% endif %}"
+                            placeholder="12.345.678-9"
+                            required>
+                    <label id="Invalido" class="validation-message invalid" style="display: none;"><b>RUT Inválido</b></label>
+                    <label id="Valido" class="validation-message valid" style="display: none;"><b>RUT Válido</b></label>
+                </div>
 
-            <button type="submit">{% if carga_familiar %}Actualizar{% else %}Crear{% endif %}</button>
-        </form>
-        <a href="{% url 'listar_cargas_familiares' %}"><button type="button">Volver a la lista</button></a>
+                <div class="form-group">
+                    <label for="trabajador">Trabajador:</label>
+                    <select name="trabajador" id="trabajador" required>
+                        <option value="">Selecciona un trabajador</option>
+                        {% for trabajador in trabajadores %}
+                            <option value="{{ trabajador.rut }}"
+                                    {% if carga_familiar and carga_familiar.trabajador.rut == trabajador.rut %}selected
+                                    {% elif values.trabajador == trabajador.rut %}selected{% endif %}>
+                                {{ trabajador.nombre }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit">{% if carga_familiar %}Actualizar{% else %}Crear{% endif %}</button>
+                    <a href="{% url 'listar_cargas_familiares' %}">
+                        <button type="button" class="cancel-btn">Cancelar</button>
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

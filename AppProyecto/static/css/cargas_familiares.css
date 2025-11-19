@@ -1,0 +1,31 @@
+/* ============================================
+   CARGAS_FAMILIARES.CSS - Estilos específicos para Cargas Familiares
+   ============================================ */
+
+/* Estilos específicos para la lista de cargas familiares */
+.cargas-table th:nth-child(1) { width: 8%; }  /* ID */
+.cargas-table th:nth-child(2) { width: 20%; } /* Nombre */
+.cargas-table th:nth-child(3) { width: 15%; }  /* Parentesco */
+.cargas-table th:nth-child(4) { width: 12%; } /* Género */
+.cargas-table th:nth-child(5) { width: 15%; } /* RUT */
+.cargas-table th:nth-child(6) { width: 20%; } /* Trabajador */
+.cargas-table th:nth-child(7) { width: 10%; } /* Acciones */
+
+/* Badge para parentesco */
+.parentesco-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    background: #e6f3ff;
+    color: #2c5282;
+}
+
+/* ID destacado */
+.id-cell {
+    font-family: 'Courier New', monospace;
+    color: #718096;
+    font-size: 13px;
+}
+

@@ -9,75 +9,91 @@
 </head>
 
 <body>
-
-<header class="header">
-    <div class="header-content">
-        <div class="logo">Logística QK</div>
-        <nav class="navbar">
-            <a href="#inicio">Inicio</a>
-            <a href="#mision">Misión</a>
-            <a href="#contacto">Contacto</a>
-        </nav>
-        <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
-    </div>
-</header>
-
-
-<!-- HERO / BANNER PRINCIPAL -->
-<section id="inicio" class="hero">
-    <div class="hero-content">
-        <h1>Bienvenidos a Logística QK</h1>
-        <p>Soluciones integrales en gestión logística y transporte</p>
-        <a href="{% url 'login' %}" class="btn-primary">Ingresar al Sistema</a>
-    </div>
-</section>
-
-
-<!-- MISIÓN -->
-<section id="mision" class="section">
-    <h2 class="section-title">Nuestra Misión</h2>
-
-    <div class="cards-container">
-
-        <div class="card">
-            <img src="https://ciatransportadora.com/wp-content/uploads/2024/06/Eficiencia-Logistica.jpg" alt="Eficiencia">
-            <h3>Eficiencia</h3>
-            <p>Optimizamos procesos logísticos para maximizar tu productividad.</p>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">Logística QK</div>
+            </div>
+            <nav class="navbar">
+                <a href="#inicio">Inicio</a>
+                <a href="#mision">Misión</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+            <a href="{% url 'login' %}" class="login-btn">Iniciar Sesión</a>
         </div>
+    </header>
 
-        <div class="card">
-            <img src="https://alianzaflotillera.com/wp-content/uploads/2020/06/Transporte-y-Logistica.jpg" alt="Seguridad">
-            <h3>Seguridad</h3>
-            <p>Garantizamos la integridad de tu carga en cada trayecto.</p>
-        </div>
+    <div class="container">
+        <!-- HERO / BANNER PRINCIPAL -->
+        <section id="inicio" class="hero-section">
+            <div class="hero-content">
+                <h1>Bienvenidos a Logística QK</h1>
+                <p>Soluciones integrales en gestión logística y transporte</p>
+                <a href="{% url 'login' %}" class="btn-primary">Ingresar al Sistema</a>
+            </div>
+        </section>
 
-        <div class="card">
-            <img src="https://www.beetrack.com/hubfs/Log%C3%ADstica%20y%20cadena%20de%20suministro.jpg" alt="Innovación">
-            <h3>Innovación</h3>
-            <p>Implementamos tecnología de punta en gestión logística.</p>
-        </div>
+        <!-- MISIÓN -->
+        <section id="mision" class="section">
+            <div class="welcome-section">
+                <h2>Nuestra Misión</h2>
+                <p>Comprometidos con la excelencia en cada servicio que ofrecemos</p>
+            </div>
 
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon card-icon-purple">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                            <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+                        </svg>
+                    </div>
+                    <h3>Eficiencia</h3>
+                    <p>Optimizamos procesos logísticos para maximizar tu productividad.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon card-icon-green">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                        </svg>
+                    </div>
+                    <h3>Seguridad</h3>
+                    <p>Garantizamos la integridad de tu carga en cada trayecto.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon card-icon-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3>Innovación</h3>
+                    <p>Implementamos tecnología de punta en gestión logística.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section id="contacto" class="section contact-section">
+            <div class="welcome-section">
+                <h2>Contacto</h2>
+                <p>Estamos aquí para ayudarte con tus necesidades logísticas</p>
+            </div>
+
+            <div class="contact-form-container">
+                <form class="contact-form">
+                    <input type="text" placeholder="Nombre" required>
+                    <input type="email" placeholder="Correo electrónico" required>
+                    <input type="tel" placeholder="Teléfono" required>
+                    <textarea placeholder="Mensaje sobre servicios logísticos" rows="5"></textarea>
+                    <button type="submit" class="btn-primary">Enviar Consulta</button>
+                </form>
+            </div>
+        </section>
     </div>
-</section>
 
-
-<!-- CONTACTO -->
-<section id="contacto" class="section contact-section">
-    <h2 class="section-title">Contacto</h2>
-
-    <form class="contact-form">
-        <input type="text" placeholder="Nombre" required>
-        <input type="email" placeholder="Correo electrónico" required>
-        <input type="tel" placeholder="Teléfono" required>
-        <textarea placeholder="Mensaje sobre servicios logísticos"></textarea>
-        <button type="submit" class="btn-primary">Enviar Consulta</button>
-    </form>
-</section>
-
-
-<footer class="footer">
-    <p>© 2024 Logística QK. Todos los derechos reservados. Gestión Logística Inteligente.</p>
-</footer>
-
+    <footer class="footer">
+        <p>© 2024 Logística QK. Todos los derechos reservados. Gestión Logística Inteligente.</p>
+    </footer>
 </body>
 </html>

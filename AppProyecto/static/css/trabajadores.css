@@ -1,0 +1,36 @@
+/* ============================================
+   TRABAJADORES.CSS - Estilos específicos para Trabajadores
+   ============================================ */
+
+/* Estilos específicos para la lista de trabajadores */
+.trabajadores-table th:nth-child(1) { width: 15%; } /* RUT */
+.trabajadores-table th:nth-child(2) { width: 25%; } /* Nombre */
+.trabajadores-table th:nth-child(3) { width: 12%; } /* Género */
+.trabajadores-table th:nth-child(4) { width: 25%; } /* Dirección */
+.trabajadores-table th:nth-child(5) { width: 13%; } /* Teléfono */
+.trabajadores-table th:nth-child(6) { width: 10%; } /* Acciones */
+
+/* Badge para género */
+.genero-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    background: #e6fffa;
+    color: #234e52;
+}
+
+/* Estilos para RUT destacado */
+.rut-cell {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: #667eea;
+}
+
+/* Sin género */
+.sin-genero {
+    color: #a0aec0;
+    font-style: italic;
+}
+

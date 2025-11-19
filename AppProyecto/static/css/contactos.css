@@ -1,0 +1,28 @@
+/* ============================================
+   CONTACTOS.CSS - Estilos específicos para Contactos de Emergencia
+   ============================================ */
+
+/* Estilos específicos para la lista de contactos */
+.contactos-table th:nth-child(1) { width: 25%; } /* Nombre */
+.contactos-table th:nth-child(2) { width: 15%; } /* Relación */
+.contactos-table th:nth-child(3) { width: 15%; } /* Teléfono */
+.contactos-table th:nth-child(4) { width: 25%; } /* Trabajador */
+.contactos-table th:nth-child(5) { width: 20%; } /* Acciones */
+
+/* Badge para relación */
+.relacion-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    background: #fef5e7;
+    color: #7d6608;
+}
+
+/* Teléfono destacado */
+.telefono-cell {
+    font-family: 'Courier New', monospace;
+    color: #2d3748;
+}
+

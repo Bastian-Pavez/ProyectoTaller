@@ -1,44 +1,75 @@
-<!-- contacto_emergencia_lista.html -->
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Contactos de Emergencia</title>
-    {% load static %} 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>Contactos de Emergencia - Sistema de Gestión</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/contactos.css' %}">
 </head>
 <body>
+    <header class="header">
+        <div class="header-content">
+            <a href="{% url 'home' %}" class="back-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Volver al Dashboard
+            </a>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>Lista de Contactos de Emergencia</h1>
-        <a href="{% url 'crear_contacto' %}"><button>Nuevo Contacto</button></a>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Relación</th>
-                    <th>Teléfono</th>
-                    <th>Trabajador Relacionado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for contacto in contactos %}
+        <div class="page-header">
+            <h1>Contactos de Emergencia</h1>
+            <p>Administra los contactos de emergencia de los trabajadores</p>
+        </div>
+
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" placeholder="Buscar contactos por nombre o teléfono...">
+            </div>
+            <a href="{% url 'crear_contacto' %}">
+                <button class="add-btn">+ Nuevo Contacto</button>
+            </a>
+        </div>
+
+        <div class="table-container">
+            <table class="contactos-table">
+                <thead>
                     <tr>
-                        <td>{{ contacto.nombre }}</td>
+                        <th>Nombre</th>
+                        <th>Relación</th>
+                        <th>Teléfono</th>
+                        <th>Trabajador</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contacto in contactos %}
+                    <tr>
+                        <td><strong>{{ contacto.nombre }}</strong></td>
                         <td>{{ contacto.relacion }}</td>
                         <td>{{ contacto.telefono }}</td>
                         <td>{{ contacto.trabajador.nombre }}</td>
                         <td>
-                            <a href="{% url 'editar_contacto' contacto.id_contacto %}"><button class="miniButton">Editar</button></a>
-                            <a href="{% url 'eliminar_contacto' contacto.id_contacto %}"><button class="miniButton">Eliminar</button></a>
+                            <div class="actions">
+                                <a href="{% url 'editar_contacto' contacto.id_contacto %}" class="action-btn edit">Editar</a>
+                                <a href="{% url 'eliminar_contacto' contacto.id_contacto %}" class="action-btn delete">Eliminar</a>
+                            </div>
                         </td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="{% url 'home' %}"><button>Regresar al Home</button></a>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px; color: #a0aec0;">
+                            No hay contactos de emergencia registrados.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

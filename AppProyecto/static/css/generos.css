@@ -1,0 +1,27 @@
+/* ============================================
+   GENEROS.CSS - Estilos específicos para Géneros
+   ============================================ */
+
+/* Estilos específicos para la lista de géneros */
+.generos-table th:nth-child(1) { width: 15%; } /* ID */
+.generos-table th:nth-child(2) { width: 65%; } /* Nombre */
+.generos-table th:nth-child(3) { width: 20%; } /* Acciones */
+
+/* Badge para género */
+.genero-nombre-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* ID destacado */
+.genero-id {
+    font-family: 'Courier New', monospace;
+    color: #718096;
+    font-size: 13px;
+}
+

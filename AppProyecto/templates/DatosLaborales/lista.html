@@ -1,40 +1,77 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    {% load static %} 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <title>Datos Laborales - Sistema de Gestión</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/datos_laborales.css' %}">
 </head>
 <body>
+    <header class="header">
+        <div class="header-content">
+            <a href="{% url 'home' %}" class="back-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Volver al Dashboard
+            </a>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>Lista de Datos Laborales</h1>
-        <a href="{% url 'crear_datos_laborales' %}"><button>Crear Nuevo</button></a>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Trabajador</th>
-                <th>Cargo</th>
-                <th>Área</th>
-                <th>Departamento</th>
-                <th>Acciones</th>
-            </tr>
-            {% for datos in datos_laborales %}
-            <tr>
-                <td>{{ datos.id_datos_laborales }}</td>
-                <td>{{ datos.trabajador }}</td>
-                <td>{{ datos.cargo }}</td>
-                <td>{{ datos.area }}</td>
-                <td>{{ datos.departamento }}</td>
-                <td>
-                    <a href="{% url 'editar_datos_laborales' datos.id_datos_laborales %}"><button class="miniButton">Editar</button></a>
-                    <a href="{% url 'eliminar_datos_laborales' datos.id_datos_laborales %}"><button class="miniButton">Eliminar</button></a>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-        <a href="{% url 'home' %}"><button>Regresar al Home</button></a>
+        <div class="page-header">
+            <h1>Datos Laborales</h1>
+            <p>Administra la información laboral de los trabajadores</p>
+        </div>
+
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" placeholder="Buscar datos laborales por trabajador o cargo...">
+            </div>
+            <a href="{% url 'crear_datos_laborales' %}">
+                <button class="add-btn">+ Nuevos Datos Laborales</button>
+            </a>
+        </div>
+
+        <div class="table-container">
+            <table class="datos-laborales-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Trabajador</th>
+                        <th>Cargo</th>
+                        <th>Área</th>
+                        <th>Departamento</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for datos in datos_laborales %}
+                    <tr>
+                        <td>{{ datos.id_datos_laborales }}</td>
+                        <td><strong>{{ datos.trabajador }}</strong></td>
+                        <td>{{ datos.cargo }}</td>
+                        <td>{{ datos.area }}</td>
+                        <td>{{ datos.departamento }}</td>
+                        <td>
+                            <div class="actions">
+                                <a href="{% url 'editar_datos_laborales' datos.id_datos_laborales %}" class="action-btn edit">Editar</a>
+                                <a href="{% url 'eliminar_datos_laborales' datos.id_datos_laborales %}" class="action-btn delete">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 40px; color: #a0aec0;">
+                            No hay datos laborales registrados.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

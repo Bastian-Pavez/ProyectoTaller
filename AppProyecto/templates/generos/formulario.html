@@ -1,14 +1,49 @@
-<!-- templates/genero/formulario.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
-<head><title>Formulario de Género</title></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if genero %}Editar{% else %}Crear{% endif %} Género - Sistema de Gestión</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/formularios.css' %}">
+    <link rel="stylesheet" href="{% static 'css/generos.css' %}">
+</head>
 <body>
-    <h1>{{ genero.id_genero|default:'Crear' }} Género</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" value="{{ genero.nombre|default:'' }}">
-        <button type="submit">Guardar</button>
-    </form>
+    <header class="header">
+        <div class="header-content">
+            <a href="{% url 'lista_generos' %}" class="back-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Volver a la lista
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>{% if genero %}Editar{% else %}Crear{% endif %} Género</h1>
+            <p>{% if genero %}Modifica el nombre del género{% else %}Ingresa el nombre del nuevo género{% endif %}</p>
+        </div>
+
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" name="nombre" id="nombre" value="{% if genero %}{{ genero.nombre }}{% endif %}" required>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit">{% if genero %}Actualizar{% else %}Crear{% endif %}</button>
+                    <a href="{% url 'lista_generos' %}">
+                        <button type="button" class="cancel-btn">Cancelar</button>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
